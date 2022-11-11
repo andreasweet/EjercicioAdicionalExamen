@@ -1,6 +1,8 @@
 package com.example.ejercicioadicionalexamen.Modelos;
 
-public class Partido {
+import java.io.Serializable;
+
+public class Partido implements Serializable {
     String equipo1;
     String equipo2;
     String resultado;
