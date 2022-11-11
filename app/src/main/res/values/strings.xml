@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">EjercicioAdicionalExamen</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="spinner_Equipos">
+        <item>Selecciona un Equipo</item>
+        <item>Real Madrid</item>
+        <item>Valencia</item>
+        <item>FC Barcelona</item>
+        <item>Betis</item>
+        <item>PSG</item>
+    </string-array>
+
+</resources>
