@@ -2,18 +2,26 @@ package com.example.ejercicioadicionalexamen.Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ejercicioadicionalexamen.EnsenyarPartidoActivity;
 import com.example.ejercicioadicionalexamen.Modelos.Partido;
 import com.example.ejercicioadicionalexamen.R;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -29,7 +37,6 @@ public class PartidoAdapter extends RecyclerView.Adapter<PartidoAdapter.Producto
         this.context = context;
 
 }
-
     @NonNull
     @Override
     public ProductoVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,13 +45,12 @@ public class PartidoAdapter extends RecyclerView.Adapter<PartidoAdapter.Producto
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
         ));
-
         return new ProductoVH(partidoView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductoVH holder, int position) {
-        Partido partido = new Partido();
+        Partido partido = objects.get(position);
         holder.lblEquipos.setText(partido.getEquipo1()+ "vs"+partido.getEquipo2());
         holder.lblResultado.setText(partido.getResultado());
         holder.btnConfirmGanador.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +63,12 @@ public class PartidoAdapter extends RecyclerView.Adapter<PartidoAdapter.Producto
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("PARTIDO", partido);
+                Intent intent = new Intent(context, EnsenyarPartidoActivity.class); //lleva la informacion del partido
+                intent.putExtras(bundle);
+                context.startActivity(intent); //envias la informacion que hay en el intent a donde quieres
+                //mandar la informacion
             }
         });
     }
@@ -74,8 +85,6 @@ public class PartidoAdapter extends RecyclerView.Adapter<PartidoAdapter.Producto
         }else{
             builder.setMessage("Han empatado"+p.getEquipo2());
         }
-
-        builder.setMessage(null);
         builder.setCancelable(false);
         builder.setNegativeButton("SALIR", null);
         return builder.create();
@@ -90,7 +99,7 @@ public class PartidoAdapter extends RecyclerView.Adapter<PartidoAdapter.Producto
 
         TextView lblEquipos;
         TextView lblResultado;
-        Button btnConfirmGanador;
+        ImageButton btnConfirmGanador;
 
         public ProductoVH(@NonNull View itemView) {
             super(itemView);

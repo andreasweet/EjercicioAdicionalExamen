@@ -38,17 +38,12 @@ public class PartidoActivityAdd extends AppCompatActivity {
                }
            }
        });
-
-
-
-
-
     }
 
     private Partido crearPartido() {
-        if(binding.spEquipo1PartidoAdd.getSelectedItemPosition() != 0 &&
-        binding.spEquipo2PartidoAdd.getSelectedItemPosition() != 0 &&
-        !binding.txtResultadoPartidoAdd.getText().toString().isEmpty() &&
+        if(binding.spEquipo1PartidoAdd.getSelectedItemPosition() != 0 ||
+        binding.spEquipo2PartidoAdd.getSelectedItemPosition() != 0 ||
+        !binding.txtResultadoPartidoAdd.getText().toString().isEmpty() ||
         !binding.txtComentPartidoAdd.getText().toString().isEmpty()){
 
              String equipo1 = binding.spEquipo1PartidoAdd.getSelectedItem().toString();

@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -43,7 +44,11 @@ public class MainActivity extends AppCompatActivity {
         partidoList = new ArrayList<>();
         inicializarLaunchers();
 
-        View partidoView = LayoutInflater.from(this).inflate(R.layout.partido_model_card, null);
+        adapter = new PartidoAdapter(partidoList,R.layout.partido_model_card,this);
+        layoutManager = new GridLayoutManager(this, 1);
+
+        binding.content.contenedor.setAdapter(adapter);
+        binding.content.contenedor.setLayoutManager(layoutManager);
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,15 +56,6 @@ public class MainActivity extends AppCompatActivity {
                launcherCrearPartidos.launch(new Intent(MainActivity.this, PartidoActivityAdd.class));
             }
         });
-
-        partidoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-
 
     }
 
@@ -74,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 Partido partido = (Partido) result.getData().getExtras().getSerializable("PARTIDO");
                                 partidoList.add(partido);
+                                adapter.notifyItemInserted(partidoList.size()-1); //notifica que se ha introducido una card
                                 Toast.makeText(MainActivity.this, partido.toString(), Toast.LENGTH_SHORT).show();
-
                             } else {
                                 Toast.makeText(MainActivity.this, "NO HAY DATOS", Toast.LENGTH_SHORT).show();
                             }
